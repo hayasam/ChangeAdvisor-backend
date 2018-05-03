@@ -12,6 +12,12 @@ public class SourceCodeDirectoryDto {
 
     private static final String FILE_PREFIX = "file://";
 
+    private static final String GIT_PREFIX = "git://";
+
+    private static final String GIT_SUFFIX = ".git";
+
+    private static final String HTTP_PREFIX = "http";
+
     @NotNull(message = "Path may not be null")
     @Size(min = 1, message = "Path may not be empty")
     @Pattern(regexp = "((https://|git://).*.git)|(file://.*)", message = "Path doesn't match any known patterns. Known patterns are: https://*.git or file://*")
@@ -70,10 +76,10 @@ public class SourceCodeDirectoryDto {
     }
 
     public boolean isFileSystemPath() {
-        return path.startsWith("file://");
+        return path.startsWith(FILE_PREFIX);
     }
 
     public boolean isGitPath() {
-        return (path.startsWith("git://") || path.startsWith("http")) && path.endsWith(".git");
+        return (path.startsWith(GIT_PREFIX) || path.startsWith(HTTP_PREFIX)) && path.endsWith(GIT_SUFFIX);
     }
 }

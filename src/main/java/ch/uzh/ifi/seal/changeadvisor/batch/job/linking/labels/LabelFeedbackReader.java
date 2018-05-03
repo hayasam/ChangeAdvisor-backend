@@ -54,7 +54,7 @@ public class LabelFeedbackReader implements ItemReader<Cluster> {
             clusters.add(c);
         }
 
-        logger.info(String.format("Running linker for %d tfidf clusters.", clusters.size()));
+        logger.info("Running linker for %d tfidf clusters.", clusters.size());
         clusterIterator = clusters.iterator();
     }
 }

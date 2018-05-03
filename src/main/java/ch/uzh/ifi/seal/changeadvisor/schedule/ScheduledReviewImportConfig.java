@@ -73,7 +73,7 @@ public class ScheduledReviewImportConfig implements SchedulingConfigurer {
     }
 
     public void setSchedule(final Project project) {
-        logger.info(String.format("Updating schedule for [%s]", project.getAppName()));
+        logger.info("Updating schedule for [%s]", project.getAppName());
 
         final String projectId = project.getId();
 
@@ -99,7 +99,7 @@ public class ScheduledReviewImportConfig implements SchedulingConfigurer {
             Date next = getNextExecutionTime(project.getCronSchedule());
             project.setReviewsConfig(ReviewsConfig.of(project.getReviewsConfig(), next));
             projectService.save(project);
-            logger.info(String.format("Setting next execution time for [%s]: %s", project.getGooglePlayId(), next));
+            logger.info("Setting next execution time for [%s]: %s", project.getGooglePlayId(), next);
             return next;
         };
     }
@@ -111,7 +111,9 @@ public class ScheduledReviewImportConfig implements SchedulingConfigurer {
 
     private void startReviewImport(final Project project) {
         try {
-            logger.info(String.format("The time is now %s. Starting review import for [%s].", dateFormat.format(new Date()), project.getAppName()));
+            logger.info("The time is now %s. Starting review import for [%s].",
+                    dateFormat.format(new Date()),
+                    project.getAppName());
             Map<String, Object> params = createReviewImportParams(project);
             reviewImportService.reviewImport(params);
 

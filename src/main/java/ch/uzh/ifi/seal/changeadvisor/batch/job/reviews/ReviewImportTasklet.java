@@ -25,8 +25,8 @@ public class ReviewImportTasklet implements Tasklet {
 
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-        logger.info(String.format("Starting review crawling for app %s with parameters: limit=%s; threads=%s", apps, config.getLimit(), config.getNumberOfThreadToUse()));
-        
+        logger.info("Starting review crawling for app %s with parameters: limit=%s; threads=%s", apps, config.getLimit(), config.getNumberOfThreadToUse());
+
         MonitorableExtractor extractor = new MonitorableExtractor(apps, config);
         extractor.extract();
 

@@ -53,18 +53,18 @@ public class ReviewsConfigurationManager {
     }
 
     ConfigurationManager mergeUserConfigWithProperties(Map<String, String> params) {
-        ConfigurationManager config = ConfigurationManager.getInstance();
-        Properties properties = configToProperties(config);
+        ConfigurationManager configuration = ConfigurationManager.getInstance();
+        Properties properties = configToProperties(configuration);
         properties.putAll(params);
 
         if (SystemUtils.IS_OS_WINDOWS) {
             properties.put(AllowedKeyword.PHANTOM_JS, PHANTOMJS_WIN);
         } else {
-            properties.put(AllowedKeyword.PHANTOM_JS, config.getPathForPhantomJSDriver());
+            properties.put(AllowedKeyword.PHANTOM_JS, configuration.getPathForPhantomJSDriver());
         }
-        loadConfigFromProperties(config, properties);
+        loadConfigFromProperties(configuration, properties);
 
-        return config;
+        return configuration;
     }
 
     private Properties configToProperties(ConfigurationManager config) {

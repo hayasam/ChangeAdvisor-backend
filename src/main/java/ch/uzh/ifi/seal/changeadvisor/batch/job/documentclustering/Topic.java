@@ -17,13 +17,13 @@ public class Topic {
 
     private final Set<String> bag;
 
-    private final int topic;
+    private final int topicId;
 
     private LocalDateTime timestamp;
 
     public Topic(Set<String> bag, int topic) {
         this.bag = bag;
-        this.topic = topic;
+        this.topicId = topic;
         timestamp = LocalDateTime.now();
     }
 
@@ -35,8 +35,8 @@ public class Topic {
         return bag;
     }
 
-    public int getTopic() {
-        return topic;
+    public int getTopicId() {
+        return topicId;
     }
 
     public LocalDateTime getTimestamp() {
@@ -47,7 +47,7 @@ public class Topic {
     public String toString() {
         return "Topic{" +
                 "bag=" + bag +
-                ", topic=" + topic +
+                ", topic=" + topicId +
                 ", timestamp=" + timestamp +
                 '}';
     }

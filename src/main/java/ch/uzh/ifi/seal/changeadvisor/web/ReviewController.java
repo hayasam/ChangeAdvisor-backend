@@ -52,7 +52,7 @@ public class ReviewController {
     public long reviewImport(@RequestBody Map<String, Object> params) throws FailedToRunJobException {
         Assert.notEmpty(params, "Empty or null parameters. Need at least list of apps.");
         Assert.isTrue(params.containsKey("apps") || params.containsKey("id"), "Request has to contain list of apps.");
-        logger.info(String.format("Creating review import job and starting process with parameters %s.", params));
+        logger.info("Creating review import job and starting process with parameters %s.", params);
         JobExecution jobExecution = reviewImportService.reviewImport(params);
         return jobExecution.getJobId();
     }
@@ -64,7 +64,7 @@ public class ReviewController {
 
     @PostMapping(path = "reviews/analyze")
     public long reviewAnalysis(@RequestBody @Valid ReviewAnalysisDto dto) throws FailedToRunJobException {
-        logger.info(String.format("Starting analysis job for app %s!", dto.getApp()));
+        logger.info("Starting analysis job for app %s!", dto.getApp());
         JobExecution jobExecution = reviewImportService.reviewAnalysis(dto);
         return jobExecution.getJobId();
     }
@@ -87,14 +87,14 @@ public class ReviewController {
 
     @PostMapping(path = "reviews/processing")
     public long reviewsProcessing(@RequestBody @Valid ReviewAnalysisDto dto) throws FailedToRunJobException {
-        logger.info(String.format("Starting reviews processing job for app %s!", dto.getApp()));
+        logger.info("Starting reviews processing job for app %s!", dto.getApp());
         JobExecution jobExecution = reviewImportService.reviewProcessing(dto);
         return jobExecution.getJobId();
     }
 
     @PostMapping(path = "reviews/clustering")
     public long reviewsClustering(@RequestBody @Valid ReviewAnalysisDto dto) throws FailedToRunJobException {
-        logger.info(String.format("Starting reviews clustering job for app %s!", dto.getApp()));
+        logger.info("Starting reviews clustering job for app %s!", dto.getApp());
         JobExecution jobExecution = reviewImportService.reviewClustering(dto);
         return jobExecution.getJobId();
     }

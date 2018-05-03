@@ -34,7 +34,7 @@ public class ClusterWriter implements ItemWriter<List<LinkingResult>> {
         if (appName != null) {
             logger.info("Deleting previous linking results.");
             long resultsDeleted = repository.deleteByAppName(appName);
-            logger.info(String.format("Deleted %d results", resultsDeleted));
+            logger.info("Deleted %d results", resultsDeleted);
         }
     }
 

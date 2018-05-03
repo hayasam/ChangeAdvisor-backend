@@ -53,13 +53,13 @@ public class ChangeAdvisorLinker implements Linker {
 
         final Collection<String> clusterCleanedBag = corpusProcessor.process(clusterBag);
 
-        logger.debug(String.format("Cluster: %s, size: %d", topicId, reviews.size()));
-        logger.debug(String.format("Candidates size: %d", candidates.size()));
+        logger.debug("Cluster: %s, size: %d", topicId, reviews.size());
+        logger.debug("Candidates size: %d", candidates.size());
 
         List<LinkingResult> similarityResults = checkSimilarity(topicId, candidates, clusterCleanedBag, originalReviews);
         results.addAll(similarityResults);
 
-        logger.info(String.format("Finished running topic: %s", topicId));
+        logger.info("Finished running topic: %s", topicId);
         return results;
     }
 
@@ -77,8 +77,7 @@ public class ChangeAdvisorLinker implements Linker {
         final Collection<String> codeElementBag = corpusProcessor.process(candidate.getBag());
 
         if (!clusterBag.isEmpty() && !codeElementBag.isEmpty()) {
-
-            // Compute asymmetric dice index.
+            
             double similarity = similarityMetric.similarity(clusterBag, codeElementBag);
 
             if (similarity >= THRESHOLD) {
@@ -111,22 +110,6 @@ public class ChangeAdvisorLinker implements Linker {
         Set<T> set = new HashSet<>(c1);
         set.retainAll(c2);
         return ImmutableSet.copyOf(set);
-    }
-
-    private void findCandidates(Collection<TopicAssignment> assignments, Map<CodeElement, Collection<String>> codeComponentWords, Collection<CodeElement> candidates, Set<String> clusterBag, Set<String> originalReviews) {
-        for (TopicAssignment review : assignments) {
-            Set<String> reviewWords = review.getBag();
-
-            for (Map.Entry<CodeElement, Collection<String>> codeElement : codeComponentWords.entrySet()) {
-                Collection<String> intersection = intersection(reviewWords, codeElement.getValue());
-
-                if (!intersection.isEmpty()) {
-                    clusterBag.addAll(review.getBag());
-                    candidates.add(codeElement.getKey());
-                    originalReviews.add(review.getOriginalSentence());
-                }
-            }
-        }
     }
 
     Map<Integer, List<TopicAssignment>> groupByTopic(Collection<TopicAssignment> assignments) {

@@ -181,7 +181,7 @@ public class ReviewAggregationService {
         List<Label> labels = labelRepository.findByAppNameAndCategoryAndNgramSizeOrderByScoreDesc(dto.getApp(), dto.getCategory(), dto.getNgrams());
         labels = getLabelsUpTo(labels, limit);
 
-        logger.info(String.format("Fetching reviews for top %d labels: %s", dto.getLimit(), labels));
+        logger.info("Fetching reviews for top %d labels: %s", dto.getLimit(), labels);
         List<LabelWithReviews> labelWithReviews = new ArrayList<>(labels.size());
         for (Label label : labels) {
             List<TransformedFeedback> feedback = transformedFeedbackRepository.findDistinctByArdocResultAppNameAndArdocResultCategoryAndTransformedSentenceContainingIgnoreCase(dto.getApp(), dto.getCategory(), label.getLabel());
@@ -217,7 +217,7 @@ public class ReviewAggregationService {
         List<Label> labels = labelRepository.findByAppNameAndNgramSizeOrderByScoreDesc(dto.getGooglePlayId(), dto.getNgrams());
         labels = getLabelsUpTo(labels, limit);
 
-        logger.info(String.format("Fetching reviews for top %d labels: %s", dto.getLimit(), labels));
+        logger.info("Fetching reviews for top %d labels: %s", dto.getLimit(), labels);
         List<LabelWithReviews> labelWithReviews = new ArrayList<>(labels.size());
         for (Label label : labels) {
             List<TransformedFeedback> feedback = transformedFeedbackRepository.findByArdocResultAppNameAndTransformedSentenceContainingIgnoreCase(dto.getGooglePlayId(), label.getLabel());

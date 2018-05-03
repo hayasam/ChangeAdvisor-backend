@@ -49,7 +49,7 @@ public class FlatFileTransformedFeedbackReader implements ItemReader<List<Transf
 
         List<TransformedFeedback> feedbacks = readFromFile(filePath, inputCategories);
         hasRead = true;
-        logger.debug(String.format("Read (%d) feedbacks", feedbacks.size()));
+        logger.debug("Read (%d) feedbacks", feedbacks.size());
         return feedbacks;
     }
 

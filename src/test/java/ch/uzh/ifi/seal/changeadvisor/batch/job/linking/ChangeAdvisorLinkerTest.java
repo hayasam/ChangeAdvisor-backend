@@ -27,8 +27,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.core.Is.is;
 
 public class ChangeAdvisorLinkerTest {
@@ -113,7 +111,7 @@ public class ChangeAdvisorLinkerTest {
         Map<Integer, List<TopicAssignment>> map = linker.groupByTopic(assignments);
 
         Assert.assertThat(map.size(), is(topics.size()));
-        topics.forEach(t -> Assert.assertTrue(map.containsKey(t.getTopic())));
+        topics.forEach(t -> Assert.assertTrue(map.containsKey(t.getTopicId())));
         assignments.forEach(a -> Assert.assertTrue(map.get(a.getTopic()).contains(a)));
 
 

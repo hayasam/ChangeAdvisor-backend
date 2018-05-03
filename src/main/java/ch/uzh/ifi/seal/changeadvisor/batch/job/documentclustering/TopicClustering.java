@@ -30,19 +30,19 @@ public class TopicClustering implements ItemProcessor<List<TransformedFeedback>,
     public TopicClusteringResult process(List<TransformedFeedback> items) {
         Corpus corpus = Corpus.of(items);
 
-        logger.info(String.format("Starting clustering of (%d) documents", corpus.size()));
+        logger.info("Starting clustering of (%d) documents", corpus.size());
         long start = System.currentTimeMillis();
 
         documentClusterer.fit(corpus, maxIterations);
 
         long end = System.currentTimeMillis();
-        logger.info(String.format("Finished clustering, time elapsed: %.2f", (end - start) / 1000.));
+        logger.info("Finished clustering, time elapsed: %.2f", (end - start) / 1000.);
 
         List<TopicAssignment> assignments = documentClusterer.assignments();
         List<Topic> topics = documentClusterer.topics();
 
-        logger.info(String.format("Topics: %d", topics.size()));
-        logger.info(String.format("Topic Assignments: %d", assignments.size()));
+        logger.info("Topics: %d", topics.size());
+        logger.info("Topic Assignments: %d", assignments.size());
         return new TopicClusteringResult(topics, assignments);
     }
 }
