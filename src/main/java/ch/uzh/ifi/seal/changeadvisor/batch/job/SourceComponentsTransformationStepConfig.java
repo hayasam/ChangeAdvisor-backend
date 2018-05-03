@@ -76,7 +76,7 @@ public class SourceComponentsTransformationStepConfig {
         return reader;
     }
 
-    public SourceCodeProcessor processor() {
+    private SourceCodeProcessor processor() {
         CorpusProcessor corpusProcessor = new CorpusProcessor.Builder()
                 .escapeSpecialChars()
                 .withComposedIdentifierSplit()
@@ -90,7 +90,7 @@ public class SourceComponentsTransformationStepConfig {
         return new SourceCodeProcessor(5, corpusProcessor, codeElementRepository);
     }
 
-    public ItemWriter<CodeElement> mongoWriter() {
+    private ItemWriter<CodeElement> mongoWriter() {
         MongoItemWriter<CodeElement> mongoItemWriter = new MongoItemWriter<>();
         mongoItemWriter.setTemplate(mongoTemplate);
         return mongoItemWriter;
