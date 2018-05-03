@@ -15,11 +15,9 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.data.MongoItemReader;
 import org.springframework.batch.item.data.RepositoryItemReader;
-import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.transform.LineAggregator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
@@ -36,8 +34,6 @@ import java.util.Map;
 public class FeedbackTransformationStepConfig {
 
     private static final String STEP_NAME = "feedbackTransformation";
-
-    private static final String TEST_DIRECTORY = "test_files_parser";
 
     private static final int THRESHOLD = 3;
 
@@ -107,14 +103,13 @@ public class FeedbackTransformationStepConfig {
         return reader;
     }
 
-    protected ItemProcessor<ArdocResult, TransformedFeedback> feedbackProcessor() {
+    private ItemProcessor<ArdocResult, TransformedFeedback> feedbackProcessor() {
         return new FeedbackProcessor(corpusProcessor(), THRESHOLD);
     }
 
     private CorpusProcessor corpusProcessor() {
         return new CorpusProcessor.Builder()
                 .escapeSpecialChars()
-//                .withAutoCorrect(new EnglishSpellChecker())
                 .withContractionExpander()
                 .removeDuplicates(false) // For label computing we want to keep duplicates in order to keep the original sentence structure (specially for ngrams)
                 .singularize()
@@ -128,15 +123,6 @@ public class FeedbackTransformationStepConfig {
     @Bean
     public ItemWriter<TransformedFeedback> writer() {
         return new FeedbackWriter(mongoTemplate);
-    }
-
-    @Bean
-    public FlatFileItemWriter<TransformedFeedback> fileWriter() {
-        FlatFileItemWriter<TransformedFeedback> writer = new FlatFileItemWriter<>();
-        writer.setResource(new FileSystemResource(TEST_DIRECTORY + "/transformed_feedback.csv"));
-        writer.setHeaderCallback(headerWriter -> headerWriter.write("sentence,category,transformed_sentence"));
-        writer.setLineAggregator(lineAggregator());
-        return writer;
     }
 
     @Bean

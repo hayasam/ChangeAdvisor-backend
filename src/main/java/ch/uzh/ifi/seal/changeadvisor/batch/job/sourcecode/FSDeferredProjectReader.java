@@ -39,7 +39,7 @@ public class FSDeferredProjectReader implements FileSystemReader {
 
     private Project getDirectoryFromStepExecutionContext(StepExecution stepExecution) {
         Object project = stepExecution.getJobExecution().getExecutionContext().get(DIRECTORY_KEY);
-        if (project == null || !Project.class.isInstance(project)) {
+        if (!Project.class.isInstance(project)) {
             throw new IllegalArgumentException(String.format("Couldn't find project in Step Context. Found %s", project));
         }
         return (Project) project;

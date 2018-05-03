@@ -1,9 +1,11 @@
 package ch.uzh.ifi.seal.changeadvisor.batch.job;
 
-import ch.uzh.ifi.seal.changeadvisor.batch.job.documentclustering.*;
+import ch.uzh.ifi.seal.changeadvisor.batch.job.documentclustering.TopicClustering;
+import ch.uzh.ifi.seal.changeadvisor.batch.job.documentclustering.TopicClusteringResult;
+import ch.uzh.ifi.seal.changeadvisor.batch.job.documentclustering.TopicWriter;
+import ch.uzh.ifi.seal.changeadvisor.batch.job.documentclustering.TransformedFeedbackReader;
 import ch.uzh.ifi.seal.changeadvisor.batch.job.feedbackprocessing.TransformedFeedback;
 import ch.uzh.ifi.seal.changeadvisor.batch.job.feedbackprocessing.TransformedFeedbackRepository;
-import com.google.common.collect.Sets;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemReader;
@@ -12,7 +14,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by alex on 24.07.2017.
@@ -71,12 +72,5 @@ public class DocumentClusteringStepConfig {
 
     public TopicClustering topicClustering() {
         return new TopicClustering(maxIterations < 1 ? DEFAUL_MAX_ITERATIONS : maxIterations);
-    }
-
-    @Bean
-    public FlatFileTransformedFeedbackReader flatFileTransformedFeedbackReader() {
-        final String filePath = "test_files_parser/transformed_feedback/feedback.csv";
-        final Set<String> inputCategories = Sets.newHashSet("FEATURE REQUEST", "PROBLEM DISCOVERY");
-        return new FlatFileTransformedFeedbackReader(filePath, inputCategories);
     }
 }

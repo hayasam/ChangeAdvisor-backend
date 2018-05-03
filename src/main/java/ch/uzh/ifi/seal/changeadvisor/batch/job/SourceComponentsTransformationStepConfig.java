@@ -12,10 +12,7 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.data.MongoItemWriter;
-import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
@@ -27,8 +24,6 @@ import org.springframework.stereotype.Component;
 public class SourceComponentsTransformationStepConfig {
 
     private static final String STEP_NAME = "sourceCodeTransformation";
-
-    private static final String TEST_DIRECTORY = "test_files_parser";
 
     private final StepBuilderFactory stepBuilderFactory;
 
@@ -75,7 +70,7 @@ public class SourceComponentsTransformationStepConfig {
         return reader;
     }
 
-    public FSDeferredProjectReader deferredReader() {
+    private FSDeferredProjectReader deferredReader() {
         FSDeferredProjectReader reader = new FSDeferredProjectReader(new FSProjectReader(projectParser));
         reader.setSortedRead(true);
         return reader;
@@ -85,7 +80,6 @@ public class SourceComponentsTransformationStepConfig {
         CorpusProcessor corpusProcessor = new CorpusProcessor.Builder()
                 .escapeSpecialChars()
                 .withComposedIdentifierSplit()
-//                .withAutoCorrect(new EnglishSpellChecker()) // Warning huge performance impact!
                 .withContractionExpander()
                 .singularize()
                 .removeStopWords()
@@ -96,16 +90,6 @@ public class SourceComponentsTransformationStepConfig {
         return new SourceCodeProcessor(5, corpusProcessor, codeElementRepository);
     }
 
-    @Bean
-    public FlatFileItemWriter<CodeElement> fileWriter() {
-        FlatFileItemWriter<CodeElement> writer = new FlatFileItemWriter<>();
-        writer.setResource(new FileSystemResource(TEST_DIRECTORY + "/batch_test.csv"));
-        writer.setHeaderCallback(headerWriter -> headerWriter.write("component,bag"));
-        writer.setLineAggregator(CodeElement::asCsv);
-        return writer;
-    }
-
-    @Bean
     public ItemWriter<CodeElement> mongoWriter() {
         MongoItemWriter<CodeElement> mongoItemWriter = new MongoItemWriter<>();
         mongoItemWriter.setTemplate(mongoTemplate);
