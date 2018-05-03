@@ -52,14 +52,14 @@ public class SourceCodeProcessor implements ItemProcessor<ClassBean, CodeElement
 
     private Project getDirectoryFromStepExecutionContext(StepExecution stepExecution) {
         Object project = stepExecution.getJobExecution().getExecutionContext().get(DIRECTORY_KEY);
-        if (project == null || !Project.class.isInstance(project)) {
+        if (!Project.class.isInstance(project)) {
             throw new IllegalArgumentException(String.format("Couldn't find project in Step Context. Found %s", project));
         }
         return (Project) project;
     }
 
     @Override
-    public CodeElement process(ClassBean item) throws Exception {
+    public CodeElement process(ClassBean item) {
         Collection<String> bag = corpusProcessor.process(item.getPublicCorpus());
         if (isBelowThreshold(bag)) {
             return null;

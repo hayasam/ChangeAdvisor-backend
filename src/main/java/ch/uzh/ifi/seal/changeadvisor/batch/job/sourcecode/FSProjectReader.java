@@ -57,7 +57,7 @@ public class FSProjectReader implements FileSystemReader {
     }
 
     @Override
-    public ClassBean read() throws Exception {
+    public ClassBean read() {
         if (hasNotParsedYet()) {
             packages = parse();
             packageIterator = packages.iterator();
