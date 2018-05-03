@@ -27,7 +27,7 @@ public class TopicClustering implements ItemProcessor<List<TransformedFeedback>,
     }
 
     @Override
-    public TopicClusteringResult process(List<TransformedFeedback> items) throws Exception {
+    public TopicClusteringResult process(List<TransformedFeedback> items) {
         Corpus corpus = Corpus.of(items);
 
         logger.info(String.format("Starting clustering of (%d) documents", corpus.size()));

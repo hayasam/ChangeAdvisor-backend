@@ -10,7 +10,6 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -27,8 +26,6 @@ public class DocumentClusteringStepConfig {
 
     private final TopicWriter topicWriter;
 
-    private final TransformedFeedbackReader mongoFeedbackReader;
-
     private final TransformedFeedbackRepository feedbackRepository;
 
     private static final int DEFAUL_MAX_ITERATIONS = 100;
@@ -36,25 +33,14 @@ public class DocumentClusteringStepConfig {
     private int maxIterations = -1;
 
     @Autowired
-    public DocumentClusteringStepConfig(StepBuilderFactory stepBuilderFactory, TopicWriter topicWriter, TransformedFeedbackReader mongoFeedbackReader, TransformedFeedbackRepository feedbackRepository) {
+    public DocumentClusteringStepConfig(StepBuilderFactory stepBuilderFactory, TopicWriter topicWriter, TransformedFeedbackRepository feedbackRepository) {
         this.stepBuilderFactory = stepBuilderFactory;
         this.topicWriter = topicWriter;
-        this.mongoFeedbackReader = mongoFeedbackReader;
         this.feedbackRepository = feedbackRepository;
     }
 
     public void setMaxIterations(int maxIterations) {
         this.maxIterations = maxIterations;
-    }
-
-    @Bean
-    public Step documentsClustering() {
-        return stepBuilderFactory.get(STEP_NAME)
-                .<List<TransformedFeedback>, TopicClusteringResult>chunk(10)
-                .reader(mongoFeedbackReader)
-                .processor(topicClustering())
-                .writer(topicWriter)
-                .build();
     }
 
     public Step documentsClustering(final String appName) {
@@ -66,7 +52,7 @@ public class DocumentClusteringStepConfig {
                 .build();
     }
 
-    private ItemReader<List<TransformedFeedback>> reader(final String appName) {
+    private TransformedFeedbackReader reader(final String appName) {
         return new TransformedFeedbackReader(feedbackRepository, appName);
     }
 

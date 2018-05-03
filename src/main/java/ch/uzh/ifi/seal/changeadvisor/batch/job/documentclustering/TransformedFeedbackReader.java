@@ -4,11 +4,7 @@ import ch.uzh.ifi.seal.changeadvisor.batch.job.feedbackprocessing.TransformedFee
 import ch.uzh.ifi.seal.changeadvisor.batch.job.feedbackprocessing.TransformedFeedbackRepository;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemReader;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
@@ -16,10 +12,7 @@ import java.util.Set;
 /**
  * Created by alex on 24.07.2017.
  */
-@Component
 public class TransformedFeedbackReader implements ItemReader<List<TransformedFeedback>> {
-
-    private static final Logger logger = LoggerFactory.getLogger(TransformedFeedbackReader.class);
 
     private static final Set<String> ARDOC_CATEGORIES = ImmutableSet.of("FEATURE REQUEST", "PROBLEM DISCOVERY");
 
@@ -28,11 +21,6 @@ public class TransformedFeedbackReader implements ItemReader<List<TransformedFee
     private boolean hasRead = false;
 
     private final String appName;
-
-    @Autowired
-    public TransformedFeedbackReader(TransformedFeedbackRepository feedbackRepository) {
-        this(feedbackRepository, "");
-    }
 
     public TransformedFeedbackReader(TransformedFeedbackRepository feedbackRepository, String appName) {
         this.feedbackRepository = feedbackRepository;

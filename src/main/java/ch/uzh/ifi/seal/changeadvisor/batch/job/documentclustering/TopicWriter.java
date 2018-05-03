@@ -15,10 +15,6 @@ import java.util.List;
 @Component
 public class TopicWriter implements ItemWriter<TopicClusteringResult> {
 
-    private static final String COLLECTION_NAME = "topicAssignment";
-
-    private MongoItemWriter<TopicAssignment> writer;
-
     private TopicAssignmentRepository assignmentRepository;
 
     private TopicRepository topicRepository;
@@ -27,13 +23,10 @@ public class TopicWriter implements ItemWriter<TopicClusteringResult> {
     public TopicWriter(MongoTemplate mongoTemplate, TopicAssignmentRepository assignmentRepository, TopicRepository topicRepository) {
         this.assignmentRepository = assignmentRepository;
         this.topicRepository = topicRepository;
-        writer = new MongoItemWriter<>();
-        writer.setTemplate(mongoTemplate);
-        writer.setCollection(COLLECTION_NAME);
     }
 
     @Override
-    public void write(List<? extends TopicClusteringResult> items) throws Exception {
+    public void write(List<? extends TopicClusteringResult> items) {
         if (items.isEmpty()) {
             return;
         }
