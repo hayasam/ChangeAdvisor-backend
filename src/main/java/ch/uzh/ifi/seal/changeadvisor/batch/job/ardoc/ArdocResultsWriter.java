@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Writes ArdocResults to DB.
@@ -28,8 +29,10 @@ public class ArdocResultsWriter implements ItemWriter<ArdocResults> {
 
     @Override
     public void write(List<? extends ArdocResults> items) throws Exception {
-        for (ArdocResults results : items) {
-            writer.write(results.getResults());
-        }
+        writer.write(flatten(items));
+    }
+
+    private List<ArdocResult> flatten(List<? extends ArdocResults> items) {
+        return items.stream().flatMap(ArdocResults::stream).collect(Collectors.toList());
     }
 }

@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Represents the results of an entire review from the Ardoc parser timestamped with its creation time.
@@ -30,4 +31,9 @@ public class ArdocResults implements Iterable<ArdocResult> {
     public Iterator<ArdocResult> iterator() {
         return results.iterator();
     }
+
+    public Stream<ArdocResult> stream() {
+        return results.stream();
+    }
+
 }
