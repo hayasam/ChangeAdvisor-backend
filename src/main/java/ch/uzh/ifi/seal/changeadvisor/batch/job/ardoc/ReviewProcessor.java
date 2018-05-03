@@ -13,6 +13,11 @@ import org.springframework.batch.item.ItemProcessor;
 
 import java.util.List;
 
+/**
+ * Processes review objects that were mined.
+ * <p>
+ * Note: NOT STATELESS.
+ */
 public class ReviewProcessor implements ItemProcessor<Review, ArdocResults> {
 
     private static final Logger logger = LoggerFactory.getLogger(ReviewProcessor.class);
@@ -20,6 +25,8 @@ public class ReviewProcessor implements ItemProcessor<Review, ArdocResults> {
     private static final Parser parser = Parser.getInstance();
 
     private static final String ARDOC_METHODS = "NLP+SA";
+
+    private static final String PROGRESS_JOB_CONTEXT_KEY = "ardoc.progress";
 
     private int counter = 0;
 
@@ -49,6 +56,6 @@ public class ReviewProcessor implements ItemProcessor<Review, ArdocResults> {
     }
 
     private <T> void writeIntoExecutionContext(T progress) {
-        executionContext.put("ardoc.progress", progress);
+        executionContext.put(PROGRESS_JOB_CONTEXT_KEY, progress);
     }
 }

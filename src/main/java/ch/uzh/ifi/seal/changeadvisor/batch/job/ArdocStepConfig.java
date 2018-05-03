@@ -1,6 +1,5 @@
 package ch.uzh.ifi.seal.changeadvisor.batch.job;
 
-import ch.uzh.ifi.seal.changeadvisor.batch.job.ardoc.ArdocProcessor;
 import ch.uzh.ifi.seal.changeadvisor.batch.job.ardoc.ArdocResults;
 import ch.uzh.ifi.seal.changeadvisor.batch.job.ardoc.ArdocResultsWriter;
 import ch.uzh.ifi.seal.changeadvisor.batch.job.ardoc.ReviewProcessor;
@@ -51,11 +50,6 @@ public class ArdocStepConfig {
 
     private ReviewReader reviewReader(String app) {
         return new ReviewReader(ardocService, app);
-    }
-
-    @Bean
-    public ItemProcessor<String, ArdocResults> ardocProcessor() {
-        return new ArdocProcessor();
     }
 
     @Bean

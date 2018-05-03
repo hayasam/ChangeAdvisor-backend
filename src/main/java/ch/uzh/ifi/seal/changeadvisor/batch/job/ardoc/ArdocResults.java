@@ -13,12 +13,11 @@ import java.util.stream.Collectors;
  * A review may contain multiple sentences, hence multiple Ardoc results.
  * Created by alex on 17.07.2017.
  */
-@SuppressWarnings("unused")
 public class ArdocResults implements Iterable<ArdocResult> {
 
     private List<ArdocResult> results;
 
-    public ArdocResults(Review review, List<Result> results) {
+    ArdocResults(Review review, List<Result> results) {
         this.results = results.stream().map(result -> new ArdocResult(review, result)).collect(Collectors.toList());
     }
 
