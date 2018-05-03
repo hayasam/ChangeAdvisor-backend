@@ -29,7 +29,7 @@ public class ClusterReader implements ItemReader<Cluster> {
     }
 
     @Override
-    public Cluster read() throws Exception {
+    public Cluster read() {
         if (topicIterator == null) {
             topicIterator = getIterator();
         }

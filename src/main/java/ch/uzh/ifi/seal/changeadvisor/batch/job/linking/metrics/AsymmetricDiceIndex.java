@@ -24,12 +24,7 @@ public final class AsymmetricDiceIndex implements SimilarityMetric {
 
         Double overlap = (double) metricUtils.countOverlappingWords(document1, document2);
         Double result = 2 * overlap;
-
-        if (document1.size() < document2.size()) {
-            result = result / document1.size();
-        } else {
-            result = result / document2.size();
-        }
+        result = result / Math.min(document1.size(), document2.size());
 
         if (result > 1.0) {
             result = 1.0;

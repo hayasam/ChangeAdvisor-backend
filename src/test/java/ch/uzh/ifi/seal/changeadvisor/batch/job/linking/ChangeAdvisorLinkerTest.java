@@ -45,24 +45,6 @@ public class ChangeAdvisorLinkerTest {
     }
 
     @Test
-    public void process() throws Exception {
-        List<TopicAssignment> assignments = readAssignments(Paths.get("test_files_parser/linking/com.frostwire.android_assignments.csv"));
-        List<CodeElement> codeElements = readSourceComponents(Paths.get("test_files_parser/linking/source_components_frostwire.csv"));
-
-        Assert.assertThat(assignments.size(), is(1375));
-        Assert.assertThat(codeElements.size(), is(1359));
-
-        logger.info("Finished reading, starting linking.");
-
-        List<LinkingResult> results = linker.process(assignments, codeElements);
-
-        logger.info(String.format("Results found: %d.", results.size()));
-        writeResultsToCsv(results);
-        Assert.assertThat(results.size(), greaterThan(280)); // Results should be in the ~300 range.
-        Assert.assertThat(results.size(), lessThan(310)); // Results should be in the ~300 range.
-    }
-
-    @Test
     public void processIteratively() throws Exception {
         List<TopicAssignment> assignments = readAssignments(Paths.get("test_files_parser/linking/com.frostwire.android_assignments.csv"));
         List<CodeElement> codeElements = readSourceComponents(Paths.get("test_files_parser/linking/source_components_frostwire.csv"));

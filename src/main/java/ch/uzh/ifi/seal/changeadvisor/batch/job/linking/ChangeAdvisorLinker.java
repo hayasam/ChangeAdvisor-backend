@@ -39,52 +39,6 @@ public class ChangeAdvisorLinker implements Linker {
     }
 
     @Override
-    public List<LinkingResult> process(Collection<TopicAssignment> assignments, Collection<CodeElement> codeElements) {
-        Assert.notNull(similarityMetric, "No similarity metric set!");
-
-        Map<Integer, List<TopicAssignment>> clusters = groupByTopic(assignments);
-        Map<CodeElement, Collection<String>> codeComponentWords = codeComponentWordMap(codeElements);
-
-        List<LinkingResult> results = new ArrayList<>(assignments.size());
-        for (Map.Entry<Integer, List<TopicAssignment>> cluster : clusters.entrySet()) {
-            if (!cluster.getKey().equals(0)) {
-
-                Collection<CodeElement> candidates = new HashSet<>();
-                Set<String> clusterBag = new HashSet<>();
-                Set<String> originalReviews = new HashSet<>();
-
-                // Find candidates
-                findCandidates(cluster.getValue(), codeComponentWords, candidates, clusterBag, originalReviews);
-
-                final Collection<String> clusterCleanedBag = corpusProcessor.process(clusterBag);
-
-                logger.debug(String.format("Cluster: %d, size: %d", cluster.getKey(), cluster.getValue().size()));
-                logger.debug(String.format("Candidates size: %d", candidates.size()));
-
-                for (CodeElement codeElement : candidates) {
-                    final Collection<String> codeElementBag = corpusProcessor.process(codeElement.getBag());
-
-                    if (!clusterCleanedBag.isEmpty() && !codeElementBag.isEmpty()) {
-
-                        // Compute asymmetric dice index.
-                        double similarity = similarityMetric.similarity(clusterCleanedBag, codeElementBag);
-
-                        if (similarity >= THRESHOLD) {
-                            LinkingResult result = new LinkingResult(
-                                    cluster.getKey().toString(), originalReviews, clusterCleanedBag, codeElementBag,
-                                    codeElement.getFullyQualifiedClassName(), similarity, LinkingResult.ClusterType.HDP);
-                            results.add(result);
-                        }
-                    }
-                }
-
-                logger.info(String.format("Finished running topic: %d", cluster.getKey()));
-            }
-        }
-        return results;
-    }
-
-    @Override
     public List<LinkingResult> link(String topicId, Collection<? extends LinkableReview> reviews, Collection<CodeElement> codeElements) {
         Assert.notNull(similarityMetric, "No similarity metric set!");
 
