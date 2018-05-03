@@ -30,16 +30,16 @@ class AllowedKeyword {
 
     static {
         ALLOWED_KEYWORDS = new ImmutableSet.Builder<String>()
-                .add("store")
-                .add("input_file")
-                .add("output_file")
-                .add("from")
-                .add("to")
-                .add("limit")
-                .add("thread")
-                .add("phantomJS_path")
-                .add("get_reviews_for")
-                .add("export_to")
+                .add(STORE)
+                .add(INPUT_FILE)
+                .add(OUTPUT_FILE)
+                .add(FROM)
+                .add(TO)
+                .add(LIMIT)
+                .add(THREAD)
+                .add(PHANTOM_JS)
+                .add(REVIEWS_FOR)
+                .add(EXPORT_TO)
                 .build();
     }
 
