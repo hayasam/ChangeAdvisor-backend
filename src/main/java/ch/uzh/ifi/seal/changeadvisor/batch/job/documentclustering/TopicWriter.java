@@ -1,9 +1,7 @@
 package ch.uzh.ifi.seal.changeadvisor.batch.job.documentclustering;
 
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.data.MongoItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -20,7 +18,7 @@ public class TopicWriter implements ItemWriter<TopicClusteringResult> {
     private TopicRepository topicRepository;
 
     @Autowired
-    public TopicWriter(MongoTemplate mongoTemplate, TopicAssignmentRepository assignmentRepository, TopicRepository topicRepository) {
+    public TopicWriter(TopicAssignmentRepository assignmentRepository, TopicRepository topicRepository) {
         this.assignmentRepository = assignmentRepository;
         this.topicRepository = topicRepository;
     }

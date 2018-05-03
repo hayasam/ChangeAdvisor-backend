@@ -8,7 +8,6 @@ import ch.uzh.ifi.seal.changeadvisor.batch.job.feedbackprocessing.TransformedFee
 import ch.uzh.ifi.seal.changeadvisor.batch.job.feedbackprocessing.TransformedFeedbackRepository;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.item.ItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

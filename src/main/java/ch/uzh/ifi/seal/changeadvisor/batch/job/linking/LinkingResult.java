@@ -4,10 +4,11 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 @Document
-public class LinkingResult implements Comparable<LinkingResult> {
+public class LinkingResult implements Comparable<LinkingResult>, Serializable {
 
     public enum ClusterType {
         TFIDF, HDP

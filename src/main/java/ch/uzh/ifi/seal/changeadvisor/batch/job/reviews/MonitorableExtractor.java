@@ -1,6 +1,5 @@
 package ch.uzh.ifi.seal.changeadvisor.batch.job.reviews;
 
-import ch.uzh.ifi.seal.changeadvisor.source.parser.FSProjectParser;
 import config.ConfigurationManager;
 import crawler.GoogleReviewsCrawler;
 import extractors.Extractor;

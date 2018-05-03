@@ -29,8 +29,7 @@ public class ReviewReportResource {
     @GetMapping(path = "reviews/{projectId}/time")
     public List<ReviewTimeSeriesData> reviewTimeSeries(@PathVariable("projectId") String projectId) {
         Optional<Project> project = projectService.findById(projectId);
-        List<ReviewTimeSeriesData> report = project.map(p -> aggregationService.timeSeries(p.getGooglePlayId())).orElseThrow(IllegalArgumentException::new);
-        return report;
+        return project.map(p -> aggregationService.timeSeries(p.getGooglePlayId())).orElseThrow(IllegalArgumentException::new);
     }
 
     @GetMapping(path = "reviews/{projectId}/distribution")

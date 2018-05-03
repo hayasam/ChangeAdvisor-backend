@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents a code component. A set of words and the code component they are derived from.
@@ -112,22 +113,16 @@ public class CodeElement implements Comparable<CodeElement> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         CodeElement that = (CodeElement) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (fullyQualifiedClassName != null ? !fullyQualifiedClassName.equals(that.fullyQualifiedClassName) : that.fullyQualifiedClassName != null)
-            return false;
-        if (bag != null ? !bag.equals(that.bag) : that.bag != null) return false;
-        return timestamp != null ? timestamp.equals(that.timestamp) : that.timestamp == null;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(appName, that.appName) &&
+                Objects.equals(fullyQualifiedClassName, that.fullyQualifiedClassName) &&
+                Objects.equals(bag, that.bag);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (fullyQualifiedClassName != null ? fullyQualifiedClassName.hashCode() : 0);
-        result = 31 * result + (bag != null ? bag.hashCode() : 0);
-        result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
-        return result;
+
+        return Objects.hash(id, appName, fullyQualifiedClassName, bag);
     }
 }
