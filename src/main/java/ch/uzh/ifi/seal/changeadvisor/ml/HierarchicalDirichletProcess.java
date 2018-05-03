@@ -24,6 +24,8 @@ public class HierarchicalDirichletProcess implements TopicInferencer, TopicAssig
 
     private static final Logger logger = LoggerFactory.getLogger(HierarchicalDirichletProcess.class);
 
+    private static final String LOG_DELIMITER = "=============== =============== ===============";
+
     private Corpus corpus;
 
     private Vocabulary vocabulary;
@@ -150,15 +152,15 @@ public class HierarchicalDirichletProcess implements TopicInferencer, TopicAssig
 
         setup(vocabulary.getDocumentIds(), vocabulary.vocabularySize());
 
-        logger.info("=============== =============== ===============");
+        logger.info(LOG_DELIMITER);
         logger.info("Iteration       Topics          Perplexity");
-        logger.info("=============== =============== ===============");
+        logger.info(LOG_DELIMITER);
 
 
         for (int i = 0; i < maxIterations; i++) {
             inference();
             logger.info(String.format("%-15d %-15d %-15f", i + 1, usingK.size() - 1, perplexity()));
-            logger.info("=============== =============== ===============");
+            logger.info(LOG_DELIMITER);
         }
     }
 
