@@ -2,6 +2,7 @@ package ch.uzh.ifi.seal.changeadvisor.batch.job.feedbackprocessing;
 
 import ch.uzh.ifi.seal.changeadvisor.batch.job.ardoc.ArdocResult;
 import ch.uzh.ifi.seal.changeadvisor.preprocessing.CorpusProcessor;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.batch.item.ItemProcessor;
 
 import java.util.Collection;
@@ -21,11 +22,16 @@ public class FeedbackProcessor implements ItemProcessor<ArdocResult, Transformed
     }
 
     @Override
-    public TransformedFeedback process(ArdocResult item) throws Exception {
+    public TransformedFeedback process(ArdocResult item) {
         Collection<String> bag = corpusProcessor.process(item.getSentence());
+        return transformedFeedback(item, bag);
+    }
+
+    @Nullable
+    private TransformedFeedback transformedFeedback(ArdocResult result, Collection<String> bag) {
         if (bag.size() < threshold) {
             return null;
         }
-        return new TransformedFeedback(item, bag);
+        return new TransformedFeedback(result, bag);
     }
 }

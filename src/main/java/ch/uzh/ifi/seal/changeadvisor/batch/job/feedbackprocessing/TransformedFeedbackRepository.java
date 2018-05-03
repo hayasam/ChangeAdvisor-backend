@@ -16,8 +16,6 @@ public interface TransformedFeedbackRepository extends MongoRepository<Transform
 
     List<TransformedFeedback> findAllByArdocResultCategoryAndArdocResultAppName(String category, String appName);
 
-    List<TransformedFeedback> findAllByArdocResultAppName(String appName);
-
     List<TransformedFeedback> findAllByArdocResultCategoryIn(Collection<String> categories);
 
     List<TransformedFeedback> findByArdocResultAppNameAndArdocResultCategoryIn(String appName, Collection<String> categories);
@@ -25,7 +23,6 @@ public interface TransformedFeedbackRepository extends MongoRepository<Transform
     List<TransformedFeedback> findByArdocResultAppNameAndTransformedSentenceContainingIgnoreCase(String appName, String label);
 
     List<TransformedFeedback> findDistinctByArdocResultAppNameAndArdocResultCategoryAndTransformedSentenceContainingIgnoreCase(String appName, String category, String label);
-
 
     int deleteByArdocResultAppName(String appNAme);
 }

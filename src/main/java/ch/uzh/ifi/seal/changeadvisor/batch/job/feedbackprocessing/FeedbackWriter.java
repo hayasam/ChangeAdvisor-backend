@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class FeedbackWriter implements ItemWriter<TransformedFeedback> {
 
-    public static final String COLLECTION_NAME = "transformedFeedback";
+    private static final String COLLECTION_NAME = "transformedFeedback";
 
     private MongoItemWriter<TransformedFeedback> writer;
 
