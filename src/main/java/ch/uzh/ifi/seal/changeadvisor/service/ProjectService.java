@@ -38,4 +38,8 @@ public class ProjectService {
     public Project save(Project project) {
         return repository.save(project);
     }
+
+    public void delete(final String projectId) {
+        repository.deleteById(projectId);
+    }
 }

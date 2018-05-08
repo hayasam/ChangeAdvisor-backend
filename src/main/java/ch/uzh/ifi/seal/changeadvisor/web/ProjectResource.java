@@ -5,15 +5,20 @@ import ch.uzh.ifi.seal.changeadvisor.project.ReviewsConfig;
 import ch.uzh.ifi.seal.changeadvisor.schedule.ScheduledReviewImportConfig;
 import ch.uzh.ifi.seal.changeadvisor.service.ProjectService;
 import edu.emory.mathcs.backport.java.util.Collections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class ProjectResource {
+
+    private static final Logger logger = LoggerFactory.getLogger(ProjectResource.class);
 
     private final ProjectService service;
 
@@ -55,5 +60,12 @@ public class ProjectResource {
 
         Optional<Project> updatedProject = service.findById(project.getId());
         return updatedProject.map(ResponseEntity::ok).orElse(ResponseEntity.badRequest().body(project));
+    }
+
+    @DeleteMapping("/projects/{projectId}")
+    public void deleteProjectAndData(@PathVariable("projectId") final String projectId) {
+        logger.info("Deleting project....");
+        // TODO: delete all other data as well.
+        service.delete(projectId);
     }
 }
