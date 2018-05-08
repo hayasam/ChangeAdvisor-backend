@@ -73,7 +73,7 @@ public class ScheduledReviewImportConfig implements SchedulingConfigurer {
     }
 
     public void setSchedule(final Project project) {
-        logger.info("Updating schedule for [%s]", project.getAppName());
+        logger.info("Updating schedule for [{}]", project.getAppName());
 
         final String projectId = project.getId();
 
@@ -99,7 +99,7 @@ public class ScheduledReviewImportConfig implements SchedulingConfigurer {
             Date next = getNextExecutionTime(project.getCronSchedule());
             project.setReviewsConfig(ReviewsConfig.of(project.getReviewsConfig(), next));
             projectService.save(project);
-            logger.info("Setting next execution time for [%s]: %s", project.getGooglePlayId(), next);
+            logger.info("Setting next execution time for [{}]: {}", project.getGooglePlayId(), next.toString());
             return next;
         };
     }
