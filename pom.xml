@@ -173,7 +173,7 @@
         <dependency>
             <groupId>org.languagetool</groupId>
             <artifactId>languagetool-core</artifactId>
-            <version>3.8</version>
+            <version>6.3</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.languagetool/language-en -->
