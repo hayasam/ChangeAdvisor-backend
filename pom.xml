@@ -173,7 +173,7 @@
         <dependency>
             <groupId>org.languagetool</groupId>
             <artifactId>languagetool-core</artifactId>
-            <version>3.8</version>
+            <version>6.4</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.languagetool/language-en -->
@@ -201,7 +201,7 @@
         <dependency>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.7.9</version>
+            <version>0.8.7</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jgit</groupId>
